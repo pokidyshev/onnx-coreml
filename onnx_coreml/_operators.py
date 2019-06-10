@@ -1865,6 +1865,17 @@ def _convert_const(builder, node, graph, err): # type: (NeuralNetworkBuilder, No
 
             graph.constant_layers_added[output_name] = True
 
+def _convert_gather(builder, node, graph, err):
+    axis = node.attrs.get('axis', 0)
+    
+    builder.add_gather(
+        name=node.name,
+        input_names=node.inputs,
+        output_name=node.outputs[0],
+        axis=axis
+    )
+
+    _update_shape_mapping_unchanged(node, graph, err)
 
 _ONNX_NODE_REGISTRY = {
     "Abs": _convert_abs,
@@ -1882,6 +1893,7 @@ _ONNX_NODE_REGISTRY = {
     "Elu": _convert_elu,
     "Exp": _convert_exp,
     "Flatten": _convert_flatten, #Todo: handle more cases
+    "Gather": _convert_gather,
     "Gemm": _convert_gemm,
     "GlobalAveragePool": _convert_pool,
     "GlobalMaxPool": _convert_pool,

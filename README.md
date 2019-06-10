@@ -201,6 +201,7 @@ List of ONNX operators that can be converted into their CoreML equivalent:
 - Elu
 - Exp
 - Flatten
+- Gather
 - Gemm
 - GlobalAveragePool 
 - GlobalMaxPool 
